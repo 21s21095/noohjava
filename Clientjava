@@ -1,0 +1,55 @@
+public class mainnooh {
+    public static void main(String args[])
+    {
+        clinetnooh noohst=new  clinetnooh();
+        Thread noohss=new Thread(noohst);
+        noohss.start();
+        
+    }
+}
+
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+public class clinetnooh implements Runnable
+{
+ public void run()
+ {
+     try{
+         Socket noohsmc=new Socket("localhost",7700);
+        
+         Scanner noohssn=new Scanner(System.in);
+         
+         System.out.println("Enter a code of drink :");
+         int noohCode=noohssn.nextInt();
+         
+         System.out.println("Enter the RQ");
+          int salimel=noohssn.nextInt();       
+  
+          
+       
+         
+         DataOutputStream noohdos=new DataOutputStream(noohsmc.getOutputStream());
+         noohdos.writeInt(noohCode);
+         noohdos.writeInt(salimel);
+         noohdos.flush();
+         
+         DataInputStream noohdis =new  DataInputStream(noohsmc.getInputStream());
+        
+         String noohnnum=noohdis.readUTF();
+         double noohprice=noohdis.readDouble();
+         
+         System.out.println("drink name;"+noohnnum);
+         System.out.println("The price is"+noohprice);
+         
+     } catch (IOException ex) {
+         Logger.getLogger(clinetnooh.class.getName()).log(Level.SEVERE, null, ex);
+     }
+ }
+}
